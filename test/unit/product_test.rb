@@ -11,6 +11,26 @@ class ProductTest < ActiveSupport::TestCase
     assert product.errors[:image_url].any?
   end
   
+  def new_product_title(title)
+    Product.new(:title => title,
+                :description => "yyy",
+                :price => 1,
+                :image_url => "zzz.jpg")
+  end
+  
+  test "Product title must be between 8 and 20 characters" do
+    bad_titles = %w{ short too_long_12345678910111213 1 }
+    good_titles = %w{ eight123 twenty_1234567890123 }
+    
+    bad_titles.each do |title|
+      assert new_product_title(title).invalid?, "#{title} should not be valid"
+    end
+    
+    good_titles.each do |title|
+      assert new_product_title(title).valid?, "#{title} should not be invalid"
+    end
+  end
+  
   test "Product price must be positive" do
     product = Product.new(:title => "My book title.",
                           :description => "yyy",
