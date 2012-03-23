@@ -1,0 +1,8 @@
+<% if @cart.line_items.size == 1 && @cart.line_items.to_a[0].quantity == 1 %>
+	$("#cart").css("display", "none");
+<% end %>
+$("#cart").html("<%= escape_javascript(render(@cart)) %>");
+$("#cart").slideDown(500);
+$("#notice").slideUp(500);
+var oldColor = $("#current_item").css("color");
+$("#current_item").animate({color: "#FF0000" }, 1 ).animate({color: oldColor }, 1500);
