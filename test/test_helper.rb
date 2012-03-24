@@ -35,4 +35,16 @@ class ActiveSupport::TestCase
       assert false, "Unable to extract any html from the js code."
     end
   end
+  
+  def login_as(user)
+    session[:user_id] = user.id
+  end
+  
+  def logout
+    session.delete :user_id
+  end
+  
+  def setup
+    login_as(users(:one)) if defined? session
+  end
 end
