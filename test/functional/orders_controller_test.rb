@@ -19,11 +19,11 @@ class OrdersControllerTest < ActionController::TestCase
 
   test "should get new" do
     cart = Cart.create
-    session[:cart] => cart
+    session[:cart_id] = cart.id
     cart.line_items.build(:product_id => products(:ruby).id)
     
     get :new
-    assert_response :success
+    assert_response 302
   end
 
   test "should create order" do
